@@ -17,18 +17,6 @@ resource "digitalocean_kubernetes_cluster" "development" {
     interpreter = ["PowerShell", "-Command"]
   }
 }
-
-##################################################################################
-# Namespaces
-##################################################################################
-resource "kubernetes_namespace" "dev-node-app" {
-  metadata {
-    labels = {
-      istio-injection = "enabled"
-    }
-    name = "dev-node-app"
-  }
-}
 ##################################################################################
 # Container Registry  
 ##################################################################################
@@ -102,20 +90,15 @@ resource "helm_release" "istio_ingress" {
   name  = "istio-ingress"
   chart = "istio-1.9.2/manifests/charts/gateways/istio-ingress"
 
-  timeout         = 600
-  cleanup_on_fail = true
+  timeout         = 300
+  cleanup_on_fail = false
   force_update    = true
   namespace       = "istio-system"
 
-  depends_on = [digitalocean_kubernetes_cluster.development, kubernetes_namespace.istio_system, helm_release.istiod]
-}
-
-
-resource "null_resource" "deploy_node_app" {
-  
-  provisioner "local-exec" {
-    command     = "kubectl apply -f .\\manifests\\dev-node-app\\"
-    interpreter = ["PowerShell", "-Command"]
+  set {
+    name  = "controller.replicaCount"
+    value = "1"
   }
-  depends_on = [helm_release.istio_ingress]
+
+  depends_on = [digitalocean_kubernetes_cluster.development, kubernetes_namespace.istio_system, helm_release.istiod]
 }

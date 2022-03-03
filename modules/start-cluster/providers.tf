@@ -18,7 +18,6 @@ terraform {
     }
   }
 }
-provider "digitalocean" {}
 
 provider "helm" {
   kubernetes {
