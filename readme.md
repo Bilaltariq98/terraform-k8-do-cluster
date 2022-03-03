@@ -19,13 +19,13 @@ containers:
 ```
 
 Achieved:
-[x] Create a DO Kubernetes cluster 
-[x] Use istio as a service mesh 
-[x] Deploy a test app to istio 
-[] Enable Grafana, Promethus and Kiali
-[] Configure istio (sub-domain based stuff)
-[] Create K8s RBAC Policies
-[] Enable OIDC Authentication (keycloak, dex or okta and configure some groups)
+- [x] Create a DO Kubernetes cluster
+- [x] Use istio as a service mesh 
+- [x] Deploy a test app to istio 
+- [] Enable Grafana, Promethus and Kiali
+- [] Configure istio (sub-domain based stuff)
+- [] Create K8s RBAC Policies
+- [] Enable OIDC Authentication (keycloak, dex or okta and configure some groups)
 
 Other things to do 
 
